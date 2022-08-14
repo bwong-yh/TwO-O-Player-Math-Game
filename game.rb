@@ -15,7 +15,10 @@ class Game
 
   def start_game
    while game_over == false
-    puts "#{current_player.name}"
+    new_question = Question.new
+    puts "#{current_player.name}: #{new_question.ask_question}"
+    print "> "
+    new_question.check_answer(gets.chomp().to_i) ? swtich_player : (puts 'wrong')
     # self.game_over = true
    end
 
@@ -25,6 +28,4 @@ class Game
   # function for displaying score
   
   # function to check game over (either one player lives is 0)
-  
-  # function for swtiching players
 end
