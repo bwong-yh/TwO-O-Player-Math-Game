@@ -1,20 +1,34 @@
 class Game
-  attr_accessor :player_1, :player_2, :current_player, :game_over
+  attr_accessor :player_1, :player_2, :current_player, :next_player, :game_over
 
   def initialize
     puts "New Game Started"
     @player_1 = Player.new('Player 1')
     @player_2 = Player.new('Player 2')
     @current_player = player_1
+    @next_player = player_2
     @game_over = false
+  end
+
+  def swtich_player 
+    self.next_player = @current_player
+    self.current_player = current_player == player_1 ? player_2 : player_1
   end
 
   def display_score
     puts "P1: #{player_1.lives}/3 vs. P2: #{player_2.lives}/3"
   end
 
-  def swtich_player 
-    self.current_player = current_player == player_1 ? player_2 : player_1
+  def check_game_over
+    if current_player.lives == 0
+      puts "#{next_player.name} wins with a score of #{next_player.lives}/3"
+      puts "------ GAME OVER ------"
+      puts "Good bye!"
+      self.game_over = true
+    else
+      puts "----- NEW TURN -----"
+      swtich_player
+    end
   end
 
   def start_game
@@ -31,12 +45,7 @@ class Game
     end
 
     display_score
-    swtich_player
-    # self.game_over = true
+    check_game_over
    end
-
-   puts 'finish loops'
   end
-  
-  # function to check game over (either one player lives is 0)
 end
