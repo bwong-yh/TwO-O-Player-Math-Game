@@ -9,6 +9,10 @@ class Game
     @game_over = false
   end
 
+  def display_score
+    puts "P1: #{player_1.lives}/3 vs. P2: #{player_2.lives}/3"
+  end
+
   def swtich_player 
     self.current_player = current_player == player_1 ? player_2 : player_1
   end
@@ -18,14 +22,21 @@ class Game
     new_question = Question.new
     puts "#{current_player.name}: #{new_question.ask_question}"
     print "> "
-    new_question.check_answer(gets.chomp().to_i) ? swtich_player : (puts 'wrong')
+    
+    if new_question.check_answer(gets.chomp().to_i)
+      puts "Good job!"
+    else
+      puts "NO! Better luck next time."
+      current_player.lose_live
+    end
+
+    display_score
+    swtich_player
     # self.game_over = true
    end
 
    puts 'finish loops'
   end
-
-  # function for displaying score
   
   # function to check game over (either one player lives is 0)
 end
